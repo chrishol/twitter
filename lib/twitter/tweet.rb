@@ -135,6 +135,10 @@ module Twitter
       @user_mentions ||= entities(Twitter::Entity::UserMention, :user_mentions)
     end
 
+    def twitter_url
+      user? && user.screen_name ? ["https://twitter.com",user.screen_name,"status",id.to_s].join("/") : nil
+    end
+
   private
 
     # @param klass [Class]

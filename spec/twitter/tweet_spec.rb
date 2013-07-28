@@ -279,6 +279,25 @@ describe Twitter::Tweet do
     end
   end
 
+  describe "#twitter_url" do
+    it "returns a String when a user and screen name are set" do
+      tweet = Twitter::Tweet.new(:id => 28669546014, :user => {:id => "1", :screen_name => "foo"})
+      expect(tweet.twitter_url).to be_a String
+    end
+    it "returns the Twitter url when a user and screen name are set" do
+      tweet = Twitter::Tweet.new(:id => 28669546014, :user => {:id => "1", :screen_name => "bar"})
+      expect(tweet.twitter_url).to eq "https://twitter.com/bar/status/28669546014"
+    end
+    it "returns nil when user is not set" do
+      tweet = Twitter::Tweet.new(:id => 28669546014)
+      expect(tweet.twitter_url).to be_nil
+    end
+    it "returns nil when the user screen name is not set" do
+      tweet = Twitter::Tweet.new(:id => 28669546014, :user => {:id => "1"})
+      expect(tweet.twitter_url).to be_nil
+    end
+  end
+
   describe "#urls" do
     it "returns an Array of Entity::Url when entities are set" do
       urls_array = [
